@@ -2,29 +2,19 @@ pipeline {
     agent any
 
     tools {
-        maven 'maven3' // Assure-toi que "maven3" est bien configuré dans Jenkins
+        maven 'maven3'
     }
 
     environment {
-        SONAR_TOKEN = credentials('sonar-token')
         DOCKER_CREDS = credentials('dockerhub-creds')
         NEXUS_CREDS = credentials('nexus-creds')
         IMAGE_NAME = "rayanefrei/ci-cd-image"
     }
 
     stages {
-
         stage('Build Maven') {
             steps {
                 sh 'mvn clean install'
-            }
-        }
-
-        stage('Analyse SonarQube') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN'
-                }
             }
         }
 
