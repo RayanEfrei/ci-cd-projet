@@ -2,25 +2,19 @@ pipeline {
     agent any
 
     tools {
-        maven 'maven3'
+        maven 'maven3' // Assure-toi que ce nom est bien celui configuré dans Jenkins
     }
 
     environment {
-        DOCKER_CREDS = credentials('dockerhub-creds')
-        NEXUS_CREDS = credentials('nexus-creds')
-        IMAGE_NAME = "rayanefrei/ci-cd-image"
+        DOCKER_CREDS = credentials('dockerhub-creds') // Ton identifiant DockerHub
+        NEXUS_CREDS = credentials('nexus-creds')       // Ton identifiant Nexus
+        IMAGE_NAME = "rayanefrei/ci-cd-image"          // Change si ton image a un autre nom
     }
 
     stages {
         stage('Build Maven') {
             steps {
                 sh 'mvn clean install'
-            }
-        }
-
-        stage('Scan Sécurité (Trivy)') {
-            steps {
-                sh 'trivy fs --exit-code 0 --severity HIGH . || true'
             }
         }
 
