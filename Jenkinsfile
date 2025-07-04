@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'maven3' // Assure-toi que "maven3" est bien configuré dans Jenkins
+    }
+
     environment {
         SONAR_TOKEN = credentials('sonar-token')
         DOCKER_CREDS = credentials('dockerhub-creds')
