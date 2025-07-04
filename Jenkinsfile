@@ -10,12 +10,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/RayanEfrei/ci-cd-projet.git'
-            }
-        }
-
         stage('Build Maven') {
             steps {
                 sh 'mvn clean install'
